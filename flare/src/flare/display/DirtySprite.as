@@ -43,7 +43,7 @@ package flare.display
 		private static function install(stage:Stage):void
 		{
 			__stage = stage;
-//			__stage.addEventListener(Event.RENDER, renderDirty);
+			//__stage.addEventListener(Event.RENDER, renderDirty);
 			__stage.addEventListener(Event.ENTER_FRAME, renderDirty);
 			__installed = true;
 		}
@@ -57,6 +57,7 @@ package flare.display
 		 */
 		public static function renderDirty(evt:Event=null):void
 		{
+			//trace('DirtySprite flare enter frame',this.udid);
 			while (__dirtyList.length > 0) {
 				var ds:DirtySprite = DirtySprite(__dirtyList.pop());
 				var db:Boolean = (ds._dirty == DIRTY);
@@ -75,7 +76,12 @@ package flare.display
 			}
 */
 		}
-		
+		public static function pause():void {
+			__stage.removeEventListener(Event.ENTER_FRAME, renderDirty);
+		}
+		public static function resume():void {
+			__stage.addEventListener(Event.ENTER_FRAME, renderDirty);
+		}
 		// --------------------------------------------------------------------
 		
 		private static const CLEAN:int = 0; // no changes

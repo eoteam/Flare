@@ -43,7 +43,7 @@ package flare.animate
 		public function set timerInterval(t:Number):void {
 			pause(); _timer.delay = (t>0 ? t : 0); play();
 		}
-		
+
 		/**
 		 * Creates a new Scheduler--this constructor should be not used;
 		 * instead use the <code>instance</code> property.
@@ -54,7 +54,7 @@ package flare.animate
 				_scheduled = [];
 				_ids = {};
 				_obj = new Shape();
-				_timer = new Timer(0);
+				_timer = new Timer(1);
 				_timer.addEventListener(TimerEvent.TIMER, tick);
 			} else {
 				throw new Error("Invalid constructor. Use Scheduler.instance.");
@@ -64,7 +64,7 @@ package flare.animate
 		/**
 		 * Plays the scheduler, allowing it to process events.
 		 */
-		private function play():void
+		public function play():void
 		{
 			if (timerInterval <= 0) {
 				if (!_obj.hasEventListener(Event.ENTER_FRAME))
@@ -77,7 +77,7 @@ package flare.animate
 		/**
 		 * Pauses the scheduler, so that events are not processed.
 		 */
-		private function pause():void
+		public function pause():void
 		{
 			if (timerInterval <= 0) {
 				_obj.removeEventListener(Event.ENTER_FRAME, tick);
@@ -164,6 +164,7 @@ package flare.animate
 		public function tick(event:Event) : void
         {
         	// all events will see the same timestamp
+			//trace('flare enter time');
         	var time:Number = new Date().time;
         	
         	for each (var s:ISchedulable in _scheduled) {

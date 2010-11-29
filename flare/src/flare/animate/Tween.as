@@ -5,6 +5,9 @@ package flare.animate
 	
 	import flash.display.DisplayObject;
 	
+	import mx.core.IVisualElement;
+	import mx.core.IVisualElementContainer;
+	
 	/**
 	 * Transition that interpolates (in-be<em>tweens</em>) properties
 	 * of a target object over a time interval. The <tt>values</tt> property
@@ -164,8 +167,13 @@ package flare.animate
 			// set visibility, remove from display list if requested
 			var item:DisplayObject = _target as DisplayObject;
 			if (item != null) {
-				if (_remove && item.parent != null)
-					item.parent.removeChild(item);
+				if (_remove && item.parent != null) {
+					if(item.parent is IVisualElementContainer)
+						IVisualElementContainer(item.parent).removeElement(item as IVisualElement);
+					else
+						item.parent.removeChild(item);
+				}
+					
 				if (_visible != null)
 					item.visible = Boolean(_visible);
 			}

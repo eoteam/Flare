@@ -99,7 +99,7 @@ package flare.vis.controls
 			update:Function=null, hide:Function=null, delay:Number=500)
 		{
 			this.filter = filter;
-			this.tooltip = tooltip ? tooltip : createDefaultTooltip();
+		
 			
 			_showTimer = new Timer(delay);
 			_hideTimer = new Timer(100);
@@ -110,15 +110,17 @@ package flare.vis.controls
 			if (show != null) 	addEventListener(TooltipEvent.SHOW, 	show);
 			if (update != null) addEventListener(TooltipEvent.UPDATE, 	update);
 			if (hide != null) 	addEventListener(TooltipEvent.HIDE, 	hide);
+			
+			this.tooltip = tooltip ? tooltip : createDefaultTooltip();
 		}
 		
 		/**
 		 * Generates a default TextSprite tooltip 
 		 * @return a new default tooltip object
 		 */
-		public static function createDefaultTooltip():TextSprite
+		public static function createDefaultTooltip():DisplayObject
 		{
-			var fmt:TextFormat = new TextFormat("Arial", 14);
+			var fmt:TextFormat = new TextFormat("Arial", 18);
 			
 				fmt.leftMargin  = 2;
 				fmt.rightMargin = 2;

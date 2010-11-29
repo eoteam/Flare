@@ -50,6 +50,7 @@ package flare.vis.operator.encoder
 		/** @inheritDoc */
 		protected override function encode(val:Object):*
 		{
+			//trace( _palette.getSize(_binding.interpolate(val)));
 			return _palette.getSize(_binding.interpolate(val));
 		}
 		

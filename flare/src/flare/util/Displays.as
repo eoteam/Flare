@@ -65,7 +65,13 @@ package flare.util
 				return add;
 			}
 		}
-		
+		public static function removeStageListener(d:DisplayObject,eventType:String, listener:Function):void
+		{
+			if (d.stage) {
+				d.stage.removeEventListener(eventType, listener);
+				//return null;
+			}
+		}
 		/**
 		 * Iterates over the children of the input display object container,
 		 * invoking a visitor function on each. If the visitor function returns

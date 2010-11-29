@@ -213,7 +213,7 @@ package flare.animate
 		}
 		
 		/** @private */
-		internal function doEnd(evtType:String=TransitionEvent.END):void
+		internal function doEnd(evtType:String='end'):void
 		{
 			_frac = _reverse ? 0 : 1;
 			end();

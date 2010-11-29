@@ -5,7 +5,8 @@ package flare.vis.data
 	import flare.util.Filter;
 	import flare.util.IEvaluable;
 	import flare.util.Sort;
-	
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	/**
@@ -43,6 +44,16 @@ package flare.vis.data
 		public static const REVERSE:uint     = 16;
 		
 		// -- Properties ------------------------------------------------------
+		public function NodeSprite() {
+			this.addEventListener(MouseEvent.ROLL_OVER,handleRollOver);
+			this.addEventListener(MouseEvent.ROLL_OUT,handleRollOut);
+		}
+		private function handleRollOut(event:Event):void {
+			//this.dispatchEvent(new 
+		}	
+		private function handleRollOver(event:Event):void {
+			
+		}	
 		
 		private var _parentEdge:EdgeSprite;
 		private var _idx:int = -1; // node index in parent's array
@@ -78,7 +89,7 @@ package flare.vis.data
 		/** The depth of this node in the tree structure. A value of zero
 		 *  indicates that this is a root node or that there is no tree. */
 		public function get depth():uint {
-			for (var d:uint=0, p:NodeSprite=parentNode; p!=null; p=p.parentNode, d++);
+			for (var d:uint=0, p:NodeSprite=parentNode; p!=null; p=p.parentNode, d++){}
 			return d;
 		}
 

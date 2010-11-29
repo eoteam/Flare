@@ -19,6 +19,11 @@ package flare.vis
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	
+	import mx.core.UIComponent;
+	import mx.utils.UIDUtil;
+	
+	import spark.core.SpriteVisualElement;
 
 	[Event(name="update", type="flare.vis.events.VisualizationEvent")]
 
@@ -79,6 +84,12 @@ package flare.vis
 		private var _controls:ControlList;    // interactive controls
 		private var _rec:ISchedulable;        // for running continuous updates
 
+		public  function pause():void {
+			Displays.removeStageListener(this, Event.ENTER_FRAME, setHitArea);
+		}
+		public  function resume():void {
+			Displays.addStageListener(this, Event.ENTER_FRAME, setHitArea, false, int.MIN_VALUE+1);
+		}
 		/** An object storing extra properties for the visualziation. */
 		public var props:Object = {};
 		
@@ -171,6 +182,7 @@ package flare.vis
 		{
 			if (b && _rec==null) {
 				_rec = new Recurrence(this);
+				_rec.id = UIDUtil.createUID();
 				Scheduler.instance.add(_rec);
 			}
 			else if (!b && _rec!=null) {
@@ -178,7 +190,9 @@ package flare.vis
 				_rec = null;
 			}
 		}
-		
+		public function get rec():ISchedulable {
+			return _rec;
+		}
 		// -- Methods ---------------------------------------------------------
 		
 		/**
@@ -205,7 +219,7 @@ package flare.vis
 			_controls = new ControlList();
 			_controls.visualization = this;
 			
-			// Displays.addStageListener(this, Event.RENDER, setHitArea, false, int.MIN_VALUE+1);
+			//Displays.addStageListener(this, Event.RENDER, setHitArea, false, int.MIN_VALUE+1);
 			Displays.addStageListener(this, Event.ENTER_FRAME, setHitArea, false, int.MIN_VALUE+1);
 		}
 		
@@ -380,6 +394,7 @@ package flare.vis
 		 */
 		public function setHitArea(evt:Event=null):void
 		{
+			trace('Vis flare enter frame');
 			// get the union of the specified and actual bounds
 			var rb:Rectangle = getBounds(this);
 			var x1:Number = rb.left, x2:Number = rb.right;
